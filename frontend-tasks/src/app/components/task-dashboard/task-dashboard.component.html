@@ -1,0 +1,76 @@
+<section class="dashboard">
+  <header class="dashboard__header">
+    <div>
+      <p class="dashboard__eyebrow">Frontend Tasks</p>
+      <h2>Gestion de tareas</h2>
+    </div>
+    <span class="dashboard__counter">{{ tasks.length }} tareas</span>
+  </header>
+
+  <app-task-form
+    [submitLabel]="creating ? 'Agregando...' : 'Agregar tarea'"
+    placeholder="Escribe una tarea"
+    [disabled]="creating"
+    (taskSubmitted)="createTask($event)"
+  />
+
+  @if (errorMessage) {
+    <p class="task-form__error">{{ errorMessage }}</p>
+  }
+
+  @if (loading) {
+    <p>Cargando tareas...</p>
+  } @else {
+    <ul class="task-list">
+      @for (task of tasks; track task.id) {
+        <li class="task-item">
+          @if (editingTaskId === task.id) {
+            <app-task-form
+              [initialTitle]="task.title"
+              [submitLabel]="isTaskPending(task.id) ? 'Guardando...' : 'Guardar cambios'"
+              placeholder="Actualiza la tarea"
+              [showCancel]="true"
+              [disabled]="isTaskPending(task.id)"
+              (taskSubmitted)="updateTask(task, $event)"
+              (cancelled)="cancelEditing()"
+            />
+          } @else {
+            <div class="task-item__content">
+              <span [class.completed]="task.status === 'completed'">{{ task.title }}</span>
+              <span class="task-item__status">{{ task.status === 'completed' ? 'Completada' : 'Pendiente' }}</span>
+            </div>
+
+            <div class="task-item__actions">
+              <button
+                type="button"
+                class="task-item__action"
+                [disabled]="isTaskPending(task.id)"
+                (click)="startEditing(task)"
+              >
+                Editar
+              </button>
+              <button
+                type="button"
+                class="task-item__action"
+                [disabled]="task.status === 'completed' || isTaskPending(task.id)"
+                (click)="completeTask(task)"
+              >
+                {{ isTaskPending(task.id) ? 'Procesando...' : 'Completar' }}
+              </button>
+              <button
+                type="button"
+                class="task-item__action task-item__action--danger"
+                [disabled]="isTaskPending(task.id)"
+                (click)="deleteTask(task)"
+              >
+                {{ isTaskPending(task.id) ? 'Procesando...' : 'Eliminar' }}
+              </button>
+            </div>
+          }
+        </li>
+      } @empty {
+        <li class="task-list__empty">No hay tareas registradas.</li>
+      }
+    </ul>
+  }
+</section>

@@ -1,0 +1,22 @@
+<form class="task-form" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="task-form__field">
+    <label for="title">Tarea</label>
+    <input id="title" type="text" formControlName="title" [placeholder]="placeholder" />
+  </div>
+
+  @if (form.get('title')?.invalid && form.get('title')?.touched) {
+    <p class="task-form__error">La tarea debe tener al menos 3 caracteres.</p>
+  }
+
+  <div class="task-form__actions">
+    <button type="submit" [disabled]="form.invalid || isSubmitting() || disabled">
+      {{ submitLabel }}
+    </button>
+    @if (showCancel) {
+      <button type="button" class="task-form__secondary" [disabled]="disabled" (click)="cancel()">
+        Cancelar
+      </button>
+    }
+  </div>
+</form>
+
