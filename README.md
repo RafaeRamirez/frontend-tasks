@@ -1,16 +1,16 @@
 # Frontend Tasks
 
-Aplicación web desarrollada con Angular para administrar tareas mediante una API REST.
+Aplicación web desarrollada con Angular para gestionar tareas mediante una API REST. Esta interfaz permite crear, listar, editar, completar y eliminar tareas consumiendo un backend disponible en el puerto 3000.
 
 ## Requisitos
 
-- Node.js 20 o superior.
-- npm.
-- Backend Tasks ejecutándose localmente.
+- Node.js 20 o superior
+- npm
+- Backend corriendo en http://localhost:3000
 
 ## Instalación
 
-Desde la carpeta del frontend:
+Desde la raíz del proyecto ejecuta:
 
 ```bash
 npm install
@@ -18,17 +18,26 @@ npm install
 
 ## Ejecución
 
-Inicia el servidor de desarrollo:
+Inicia la aplicación en modo desarrollo:
 
 ```bash
 npm start
 ```
 
-Abre `http://localhost:4200/` en el navegador.
+Luego abre la siguiente URL en tu navegador:
 
-## Configuración de la API
+```text
+http://localhost:4200
+```
 
-La URL del backend para desarrollo está en `src/environments/environment.ts`:
+## Configuración del backend
+
+La URL base de la API está definida en los archivos de entorno:
+
+- [src/environments/environment.ts](src/environments/environment.ts)
+- [src/environments/environment.production.ts](src/environments/environment.production.ts)
+
+Por defecto, la configuración es:
 
 ```ts
 export const environment = {
@@ -37,44 +46,45 @@ export const environment = {
 };
 ```
 
-Para producción, configura la URL pública del backend en
-`src/environments/environment.production.ts`. Angular utiliza ese archivo al ejecutar:
-
-```bash
-npm run build
-```
-
-## Conexión con el backend
-
-1. Inicia el backend en `http://localhost:3000`.
-2. Inicia el frontend con `npm start`.
-3. `TaskService` consumirá los endpoints de `http://localhost:3000/api/tasks`.
-
-Si el backend utiliza otro host o puerto, cambia `apiUrl` en el ambiente correspondiente.
-El backend también debe permitir mediante CORS el origen del frontend.
+Si tu backend está en otro host o puerto, actualiza esa URL.
 
 ## Funcionalidades
 
-- Listar todas las tareas.
-- Crear tareas con validación de título.
-- Editar tareas existentes.
-- Marcar tareas como completadas.
-- Eliminar tareas con confirmación.
-- Mostrar estados de carga y errores de comunicación.
-- Adaptar la interfaz a dispositivos móviles.
+- Listar todas las tareas
+- Crear nuevas tareas desde un formulario
+- Editar tareas existentes
+- Marcar tareas como completadas
+- Eliminar tareas
+- Mostrar estados de carga y errores
+- Validar que el título no quede vacío
+
+## Estructura del proyecto
+
+```text
+src/
+  app/
+    components/
+      task-dashboard/
+      task-form/
+    models/
+    services/
+    environments/
+```
 
 ## Pruebas
 
-Ejecuta las pruebas unitarias:
+Para ejecutar las pruebas unitarias:
 
 ```bash
 npm test -- --watch=false
 ```
 
-## Compilación
-
-Genera la versión de producción:
+## Compilación para producción
 
 ```bash
 npm run build
 ```
+
+## Documentación adicional
+
+- Consulta [AWS.md](AWS.md) para las respuestas sobre AWS y el uso de inteligencia artificial.
