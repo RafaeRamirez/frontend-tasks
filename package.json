@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:frontend-tasks": "node dist/frontend-tasks/server/server.mjs"
+    "serve:ssr:frontend-tasks": "node dist/server/server.mjs"
   },
   "prettier": {
     "printWidth": 100,
